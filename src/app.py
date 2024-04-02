@@ -39,8 +39,12 @@ def handle_hello():
         "family": members
     }
 
-
     return jsonify(response_body), 200
+@app.route('/member', method=['POST'])
+def handle_add():
+    members = jackson_family.add_member()
+    response_body = {members}
+    return jsonify (response_body), 200
 
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
