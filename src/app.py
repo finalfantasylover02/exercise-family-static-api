@@ -20,6 +20,10 @@ jackson_family = FamilyStructure("Jackson")
 def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
+@app.route('/member/<int:member_id>', methods=['GET'])
+def get_member_data(member_id):
+    member = jackson_family.get_member(member_id)
+
 # generate sitemap with all your endpoints
 @app.route('/')
 def sitemap():
