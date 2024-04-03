@@ -30,15 +30,29 @@ class FamilyStructure:
         return generated_id
 
     def add_member(self, member):
+        member['last_name'] = self.last_name
+        member['id'] = self._generateId
         self._members.append(member)
 
     def delete_member(self, id):
-       self.remove(id)
+       for i, member in enumerate(self.members):
+         if member['id'] == id:
+            del self._members[i]
+            break
+    def update_member(self, id, new_member_data):
+        for i, member in enumerate(self._members):
+            if member['id'] == id:
+                self._members[i] = new_member_data
+                self._members[i]['id'] = id 
+                break
+
+
 
     def get_member(self, id):
-        for member in self.members:
-            if member.id == id:
+        for member in self._members:
+            if member['id'] == id:
                 return member
+            return None
 
     # this method is done, it returns a list with all the family members
     def get_all_members(self):

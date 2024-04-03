@@ -41,10 +41,10 @@ def handle_hello():
 
     return jsonify(response_body), 200
 @app.route('/member', method=['POST'])
-def handle_add():
-    members = jackson_family.add_member()
-    response_body = {members}
-    return jsonify (response_body), 200
+def add_member():
+    data = request.json
+    jackson_family.add_member(data)
+    return jsonify ({'message': 'Member added successfully'}), 200
 
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
