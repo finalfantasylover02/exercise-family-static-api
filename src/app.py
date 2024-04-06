@@ -15,14 +15,46 @@ CORS(app)
 # create the jackson family object
 jackson_family = FamilyStructure("Jackson")
 
+
 # Handle/serialize errors like a JSON object
 @app.errorhandler(APIException)
 def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
+@app.route('/members', methods=['GET'])
+def get_all_members():
+    members = jackson_family.get_all_members()
+    return jsonify (members), 200
+if __name__ == '__main__':
+    app.run(debug=True)
+
 @app.route('/member/<int:member_id>', methods=['GET'])
 def get_member_data(member_id):
     member = jackson_family.get_member(member_id)
+    if member:
+        return jsonify(member), 200
+    else: 
+        return jsonify({'error':'member not found'}), 404
+
+if __name__ =='__main__':
+   app.run(debug=True)
+
+@app.route('/member', methods=['POST'])
+def add_member():
+    data = request.json
+    jackson_family.add_member(data)
+    return jsonify({'message':'member added succesfully'}),200
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+@app.route('/member/<int:member_id>', methods=['DELETE'])
+def delete_member(member_id):
+    jackson_family.delete_member(member_id)
+    return jsonify ({'message':'member deleted successfully'}), 200
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 # generate sitemap with all your endpoints
 @app.route('/')

@@ -15,7 +15,7 @@ class FamilyStructure:
         # example list of members
         self._members = [
             {
-                "first_name":"John",
+                "first_name": "John",
                 "last_name": self.last_name,
                  "age": 33,
                   "lucky_numbers": [7,7,7],
